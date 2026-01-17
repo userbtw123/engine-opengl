@@ -1,0 +1,41 @@
+
+---
+Language: Cpp
+BasedOnStyle: LLVM
+
+# --- Basic Appearance ---
+IndentWidth: 4
+ColumnLimit: 100
+UseTab: Never
+Standard: Latest # Uses the most modern C++ formatting features available
+
+# --- Braces and Alignment ---
+# 'Attach' keeps braces on the same line to save vertical space without losing clarity
+BreakBeforeBraces: Attach
+AllowShortFunctionsOnASingleLine: Inline
+NamespaceIndentation: None
+
+# --- Modern C++ Aesthetics ---
+PointerAlignment: Left  # int* x instead of int *x
+SpaceAfterCStyleCast: true
+SpacesInAngles: false   # std::vector<int> instead of < int >
+
+# --- Clean Layout ---
+FixNamespaceComments: true
+ReflowComments: true
+SortIncludes: false
+IncludeBlocks: Regroup
+
+# --- Advanced Readability ---
+# Aligns values in a clean column if they are part of a similar block
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+AlignConsecutiveDeclarations: false
+
+# Helps keep logic tightly grouped
+MaxEmptyLinesToKeep: 1
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+...

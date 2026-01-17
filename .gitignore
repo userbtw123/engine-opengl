@@ -1,0 +1,11 @@
+build/
+bin/
+obj/
+
+_deps/
+
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+Makefile
