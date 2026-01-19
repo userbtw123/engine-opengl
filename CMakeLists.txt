@@ -54,6 +54,8 @@ set(IMGUI_SOURCES
 set(CORE_SOURCES
     src/Core/window.cpp
     src/Core/debugOverlay.cpp
+    src/Core/engine.cpp
+    src/Core/logger.cpp
     src/Core/input.cpp
 )
 

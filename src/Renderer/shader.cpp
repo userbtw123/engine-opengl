@@ -1,4 +1,5 @@
 #include "Renderer/shader.hpp"
+#include "Core/logger.hpp"
 
 #include <fstream>
 #include <sstream>
@@ -13,10 +14,13 @@ Shader::Shader(const std::string& v_path, const std::string& f_path) {
     uint32_t vertex_shader   = glCreateShader(GL_VERTEX_SHADER);
     uint32_t fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
     if (!vertex_shader) {
+        Logger::log(LogLevel::Error, "Failed to create vertex shader");
         throw std::runtime_error("Failed to create vertex shader");
     }
     if (!fragment_shader) {
         glDeleteShader(vertex_shader);
+
+        Logger::log(LogLevel::Error, "Failed to create fragment shader");
         throw std::runtime_error("Failed to create fragment shader");
     }
 
@@ -39,6 +43,7 @@ Shader::Shader(const std::string& v_path, const std::string& f_path) {
         glDeleteShader(vertex_shader);
         glDeleteShader(fragment_shader);
 
+        Logger::log(LogLevel::Error, "Failed to compile vertex shader: {}", (std::string) infolog);
         throw std::runtime_error("Failed to compile vertex shader: " + (std::string) infolog);
     }
 
@@ -49,6 +54,8 @@ Shader::Shader(const std::string& v_path, const std::string& f_path) {
         glDeleteShader(vertex_shader);
         glDeleteShader(fragment_shader);
 
+        Logger::log(LogLevel::Error, "Failed to compile fragment shader: {}",
+                    (std::string) infolog);
         throw std::runtime_error("Failed to compile fragment shader: " + (std::string) infolog);
     }
 
@@ -57,6 +64,7 @@ Shader::Shader(const std::string& v_path, const std::string& f_path) {
         glDeleteShader(vertex_shader);
         glDeleteShader(fragment_shader);
 
+        Logger::log(LogLevel::Error, "Failed to create program shader");
         throw std::runtime_error("Failed to create program shader");
     }
 
@@ -71,7 +79,7 @@ Shader::Shader(const std::string& v_path, const std::string& f_path) {
         glDeleteShader(vertex_shader);
         glDeleteShader(fragment_shader);
         glDeleteProgram(program);
-
+        Logger::log(LogLevel::Error, "Failed to link program shader: {}", (std::string) infolog);
         throw std::runtime_error("Failed to link program shader: " + (std::string) infolog);
     }
 
@@ -88,7 +96,8 @@ Shader::~Shader() {
 std::string Shader::readFile(const std::string& path) {
     std::ifstream file(path);
     if (!file.is_open()) {
-        throw std::runtime_error("Could not open vertex file: " + path);
+        Logger::log(LogLevel::Error, "Couldn't open a shader file {}", path);
+        throw std::runtime_error("Couldn't open a shader file: " + path);
     }
     std::stringstream buff;
 

@@ -1,9 +1,12 @@
 #include "Renderer/camera.hpp"
+#include "Core/window.hpp"
 #include "Core/input.hpp"
+#include "glm/ext/matrix_clip_space.hpp"
 #include "glm/geometric.hpp"
 #include "glm/trigonometric.hpp"
 
 #include <glm/ext/matrix_transform.hpp>
+#include <iostream>
 
 Camera::Camera()
     : pos(0, 0, 10), front(0, 0, -1), up(0, 1, 0), speed(5), fov(45.0f), sensitivity(5) {}
@@ -42,4 +45,29 @@ void Camera::update(float dt) {
     front          = glm::normalize(f);
     Input::offsetX = 0.0f;
     Input::offsetY = 0.0f;
+}
+
+glm::mat4 Camera::getProjMatrix() {
+    float aspect = (float) Window::getWidth() / (float) Window::getHeight();
+    return glm::perspective(glm::radians(fov), aspect, 0.1f, 1000.0f);
+}
+
+void Camera::setFov(float new_fov) {
+    fov = new_fov;
+    std::cout << "current width: " << Window::getWidth() << " & height: " << Window::getHeight()
+              << std::endl;
+
+    std::cout << "current fov: " << fov << std::endl;
+}
+
+void Camera::setSpeed(float new_speed) {
+    speed = new_speed;
+}
+
+void Camera::setSensitivity(float new_sens) {
+    sensitivity = new_sens;
+}
+
+void Camera::setPos(glm::vec3 new_pos) {
+    pos = new_pos;
 }

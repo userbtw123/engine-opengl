@@ -26,6 +26,9 @@ class Shader {
         }
     }
 
+    Shader(const Shader&)            = delete;
+    Shader& operator=(const Shader&) = delete;
+
   private:
     uint32_t program;
     std::unordered_map<std::string, int32_t> locations;

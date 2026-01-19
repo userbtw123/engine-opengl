@@ -2,7 +2,7 @@
 
 bool Input::keys[]        = {false};
 bool Input::keysChanged[] = {false};
-bool Input::mouseLocked   = true;
+bool Input::mouseLocked   = false;
 
 bool Input::firstMouse = true;
 float Input::lastX     = 0.0f;

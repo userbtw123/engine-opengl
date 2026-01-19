@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/debugOverlay.hpp"
-
 #include <GLFW/glfw3.h>
 #include <cstdint>
 #include <memory>
@@ -22,14 +21,20 @@ class Window {
     void swapBuffers();
     void poolEvents();
 
+    float calculate_dt();
+
     DebugOverlay createDebugOverlay();
 
-    uint32_t getWidth() const { return m_width; }
-    uint32_t getHeight() const { return m_height; }
+    static uint32_t getWidth() { return m_width; }
+    static uint32_t getHeight() { return m_height; }
 
   private:
-    uint32_t m_width, m_height;
+    static uint32_t m_width, m_height;
     std::string title;
 
+    double lastFrame;
+
     std::unique_ptr<GLFWwindow, GlfwWindowDeleter> window;
+
+    static void framebufferSizeCallback(GLFWwindow* window, int w, int h);
 };
