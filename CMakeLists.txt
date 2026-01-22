@@ -3,8 +3,14 @@ cmake_minimum_required(VERSION 3.20)
 project(engine2 LANGUAGES CXX C)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+if(MSVC)
+    add_compile_options(/EHs- /EHc- /D_HAS_EXCEPTIONS=0)
+else()
+  add_compile_options(-fno-exceptions -fno-rtti)
+endif()
 
 include(FetchContent)
 
@@ -52,26 +58,15 @@ set(IMGUI_SOURCES
 )
 
 set(CORE_SOURCES
-    src/Core/window.cpp
-    src/Core/debugOverlay.cpp
-    src/Core/engine.cpp
-    src/Core/logger.cpp
-    src/Core/input.cpp
+  src/core/window.cpp
 )
 
 set(RENDERER_SOURCES
-    src/Renderer/mesh.cpp
-    src/Renderer/scene.cpp
-    src/Renderer/game_object.cpp
-    src/Renderer/camera.cpp
-    src/Renderer/shader.cpp
-    src/Renderer/renderer.cpp
 )
 
 add_executable(${PROJECT_NAME}
     "src/main.cpp"
     ${CORE_SOURCES}
-    ${RENDERER_SOURCES}
     ${IMGUI_BACKEND_SOURCES}
     ${IMGUI_SOURCES}
 )
@@ -92,5 +87,3 @@ target_link_libraries(
     glfw 
     glm::glm
 )
-
-

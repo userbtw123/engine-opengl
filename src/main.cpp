@@ -1,21 +1,23 @@
-#include "Core/engine.hpp"
-#include "Core/logger.hpp"
-#include <GLFW/glfw3.h>
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/matrix_float4x4.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/trigonometric.hpp>
+#include "GLFW/glfw3.h"
+#include "core/window.hpp"
+#include <GL/gl.h>
 #include <iostream>
 
 int main() {
-    try {
-        Logger::init("log.txt");
-        Engine engine("Hello!", 1280, 720);
+    auto res_window = Window::create("Hello!", 1280, 720);
 
-        return engine.run();
-
-    } catch (std::exception& e) {
-        std::cerr << e.what() << std::endl;
+    if (!res_window) {
+        std::cerr << "Error: " << res_window.error();
+        glfwTerminate();
         return -1;
+    }
+
+    auto& window = res_window.value();
+
+    while (window.is_open()) {
+        window.poll_events();
+        glClearColor(0.1, 0.1, 0.1, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
+        window.swap_buffers();
     }
 }
